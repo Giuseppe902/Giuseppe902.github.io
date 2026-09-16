@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.M. Sicurezza - Calcolo della valutazione di Rischio</title>
+    <!-- Collegamento al tuo CSS esistente -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Librerie esterne necessarie (CDN) -->
+    <script src="https://cloudflare.com"></script>
+    <script src="https://cloudflare.com"></script>
+    <script src="https://cloudflare.com"></script>
+
+    <style>
+        /* Stili specifici per l'interfaccia dell'applicazione */
+        .main-container { padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
+        .grid-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        @media (max-width: 768px) { .grid-sections { grid-template-columns: 1fr; } }
+        
+        .section-box { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-top: 4px solid #0d47a1; }
+        .section-box h3 { margin-bottom: 20px; color: #0d47a1; }
+        
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-weight: 600; color: #555; }
+        .form-control { padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; }
+        
+        .btn-action { background-color: #0d47a1; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; width: 100%; transition: background 0.3s; text-align: center; }
+        .btn-action:hover { background-color: #002171; }
+        
+        #reader { width: 100%; background: #fafafa; border: 2px dashed #ccc; border-radius: 4px; overflow: hidden; }
+        
+        /* Area Risultati */
+        .result-box { margin-top: 40px; background: #e3f2fd; border: 1px solid #90caf9; padding: 25px; border-radius: 8px; display: none; text-align: center; }
+        .result-actions { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+        .qr-output-container { margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        #qrcode-canvas { padding: 10px; background: white; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <!-- Barra di Navigazione (Identica alla tua Index) -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="FOTO/Logo.jpg" alt="Logo T.M. Sicurezza">
+                <span>T.M. Sicurezza</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="La nostra azienda.html">La nostra azienda</a></li>
+            <li class="dropdown-trigger">
+                <a href="#">Servizi ▼</a>
+                <ul class="dropdown">
+                    <li><a href="Esempio di documentazione DVR.html">Esempio di documentazione DVR</a></li>
+                    <li><a href="Calcolo della valutazione di Rischio.html">Calcolo della valutazione di Rischio</a></li>
+                    <li><a href="Spiegazione della valutazione del Calcolo del RIschio e Pericolo.html">Spiegazione della valutazione</a></li>
+                </ul>
+            </li>
+            <li><a href="Contatti.html">Contatti</a></li>
+            <li class="dropdown-trigger">
+                <a href="#" class="login-btn">Login ▼</a>
+                <ul class="dropdown dropdown-login">
+                    <li><a href="Clienti.html">Clienti</a></li>
+                    <li><a href="Dipendenti.html">Dipendenti</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto Principale -->
+    <main class="main-container">
+        <div class="section-title">
+            <h2>Calcolo della Valutazione Rischio</h2>
+            <p>Seleziona la posizione dal menu oppure scansiona/carica un QR Code per generare il DVR.</p>
+        </div>
+
+        <div class="grid-sections">
+            <!-- SEZIONE 1: INPUT MANUALE FORM -->
+            <section class="section-box">
+                <h3>Inserisci la tua posizione</h3>
+                <form id="risk-form">
+                    <div class="form-group">
+                        <label for="posizione-select">Seleziona Area / Ambiente:</label>
+                        <select id="posizione-select" class="form-control" required>
+                            <option value="">-- Scegli un'opzione --</option>
+                            <option value="1">1) Uff. Amministrativo (12.60 m2)</option>
+                            <option value="2">2) Uff. Tecnico (17.64 m2)</option>
+                            <option value="3">3) Sala Riunione</option>
+                            <option value="4">4) Fotocopie</option>
+                            <option value="5">5) W.C. / Toilette</option>
+                            <option value="6">6) Attesa</option>
+                            <option value="7">7) Ingressso</option>
+                            <option value="8">8) Corridoio</option>
+                            <option value="9">9) Archivi</option>
+                            <option value="10">10) Segreteria</option>
+                            <option value="11">11) Officina</option>
+                            <option value="12">12) Deposito attrezzature</option>
+                            <option value="13">13) Deposito materiali</option>
+                            <option value="14">14) Deposito</option>
+                            <option value="15">15) Zona Esterna</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-action">Elabora da Form</button>
+                </form>
+            </section>
+
+            <!-- SEZIONE 2: SCANNER QR CODE -->
+                       <!-- SEZIONE 2: SCANNER QR CODE CON BOTTONI PERSONALIZZATI -->
+            <section class="section-box">
+                <h3>Scansione o Upload QR Code</h3>
+                
+                <div class="form-group" style="align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <!-- Bottoni di controllo espliciti in italiano -->
+                    <button type="button" id="btn-start-camera" class="btn-action" style="background-color: #2e7d32;">
+                        📷 Avvia Fotocamera Telefono/PC
+                    </button>
+                    <button type="button" id="btn-stop-camera" class="btn-action" style="background-color: #c62828; display: none;">
+                        🛑 Spegni Fotocamera
+                    </button>
+                </div>
+
+                <!-- Box Anteprima Video (Viene mostrato solo quando la telecamera è attiva) -->
+                <div id="camera-preview-container" style="display: none; margin-bottom: 20px;">
+                    <div id="reader" style="width: 100%; max-width: 400px; margin: 0 auto; background: #000; border-radius: 8px; overflow: hidden;"></div>
+                </div>
+
+                <div class="form-group" style="border-top: 1px dashed #ccc; padding-top: 15px;">
+                    <label for="qr-file-input">Oppure carica una foto del QR Code salvata sul dispositivo:</label>
+                    <input type="file" id="qr-file-input" accept="image/*" class="form-control">
+                </div>
+            </section>
+
+        <!-- SEZIONE 3: OUTPUT RISULTATI (Nascosta inizialmente) -->
+        <section id="result-section" class="result-box">
+            <h3 id="result-title">Elaborazione Completata</h3>
+            <p id="result-text">Risultato pronto per la posizione selezionata.</p>
+            
+            <div class="result-actions">
+                <button id="btn-download-pdf" class="btn-action" style="max-width: 250px;">Scarica Registro PDF</button>
+            </div>
+
+            <!-- Conversione del Risultato in un nuovo QR Code per il futuro -->
+            <div class="qr-output-container">
+                <h4>QR Code del Risultato</h4>
+                <p style="font-size: 13px; color: #666;">Salva questa immagine per scansionare direttamente il documento in futuro.</p>
+                <div id="qrcode-canvas"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Collegamento al file logico Javascript separato -->
+    <script src="app-calcolo.js"></script>
+</body>
+</html>
