@@ -1,0 +1,211 @@
+<!-- Questa riga dice al browser che il file è un documento HTML moderno (HTML5) -->
+<!DOCTYPE html>
+
+<!-- Apre il documento HTML e imposta l'italiano come lingua principale -->
+<html lang="it">
+
+<head>
+    <!-- Imposta la codifica universale per leggere correttamente le lettere accentate -->
+    <meta charset="UTF-8">
+    
+    <!-- Ottimizza la visualizzazione automatica su smartphone e tablet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Titolo specifico della pagina per la tesi di laurea L-31 -->
+    <title>T.M. Sicurezza - Calcolo della valutazione di Rischio</title>
+    
+    <!-- Infonde alla pagina lo stesso stile grafico globale della home page (caratteri, menu) -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- CDN UFFICIALE E SICURA HTTPS: Libreria JavaScript per la lettura dei codici QR tramite fotocamera -->
+    <!-- Risolve il problema del blocco dei permessi hardware su GitHub Pages e server locali -->
+    <script src="https://cloudflare.com" integrity="sha512-r6rDA7W6ZeQhvl8S7nHDT/EwXxYKK67Zrwis6MxmNhl6w6ElmEXj0EtwXECGHNfX6XW2d949l5XMGn5wM96EzA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Inizio degli stili grafici speciali applicati esclusivamente a questa pagina di calcolo -->
+    <style>
+        /* Spaziatura interna e larghezza massima del contenitore principale della pagina */
+        .main-container { padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
+        
+        /* Titolo di sezione */
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: 32px; color: #0d47a1; margin-bottom: 10px; }
+        .section-title p { color: #555; font-size: 16px; }
+
+        /* Crea una griglia a due colonne affiancate divise da uno spazio di 30 pixel per i box di input */
+        .grid-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        
+        /* Regola di adattamento: se lo schermo è più piccolo di 768px (smartphone), i blocchi si dispongono su una sola colonna */
+        @media (max-width: 768px) { .grid-sections { grid-template-columns: 1fr; } }
+        
+        /* Stile dei box bianchi di inserimento: angoli arrotondati, ombra leggera e una linea blu spessa in alto */
+        .section-box { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-top: 4px solid #0d47a1; display: flex; flex-direction: column; justify-content: space-between; }
+        
+        /* Colore blu e distanza dal basso per i titoli interni ai box di input */
+        .section-box h3 { margin-bottom: 20px; color: #0d47a1; font-size: 20px; }
+        
+        /* Gestione dello spazio verticale e dell'allineamento dei testi descrittivi sopra i campi di testo */
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; width: 100%; }
+        
+        /* Rende in grassetto e di colore grigio scuro le scritte delle etichette dei campi */
+        .form-group label { font-weight: 600; color: #555; }
+        
+        /* Stile grafico delle caselle di selezione e di testo (bordi, spazi interni e dimensione font) */
+        .form-control { padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; width: 100%; background-color: #fff; }
+        
+        /* Stile dei pulsanti: sfondo blu aziendale, testo bianco, angoli arrotondati e transizione fluida */
+        .btn-action { background-color: #0d47a1; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; width: 100%; transition: background 0.3s; text-align: center; font-size: 15px; text-decoration: none; display: inline-block; }
+        
+        /* Cambia il colore del pulsante in un blu molto più scuro quando l'utente ci passa sopra con il mouse */
+        .btn-action:hover { background-color: #002171; }
+        
+        /* Nasconde inizialmente il riquadro della telecamera finché l'utente non preme il tasto apposito */
+        #camera-preview-container { display: none; margin-top: 15px; margin-bottom: 15px; width: 100%; }
+        
+        /* Riquadro in cui verrà proiettato lo streaming video della fotocamera dello smartphone */
+        #reader { width: 100%; max-width: 350px; margin: 0 auto; background: #000; border-radius: 8px; overflow: hidden; border: 2px solid #0d47a1; }
+        
+        /* Stile per il bottone di spegnimento della fotocamera */
+        #btn-stop-camera { display: none; background-color: #d32f2f; margin-top: 10px; }
+        #btn-stop-camera:hover { background-color: #c62828; }
+
+        /* Label per l'upload di file di tipo immagine stilizzato come un bottone */
+        .file-upload-label { background-color: #37474f; color: white; padding: 12px 20px; border-radius: 4px; display: inline-block; width: 100%; text-align: center; font-weight: 600; cursor: pointer; transition: background 0.3s; margin-top: 10px; }
+        .file-upload-label:hover { background-color: #263238; }
+        #qr-file-input { display: none; }
+    </style>
+<!-- Fine della sezione head e delle impostazioni grafiche interne -->
+</head>
+
+<body>
+
+    <!-- Barra di Navigazione superiore fissa e stabilizzata (Identica alla Home per coerenza visiva) -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="FOTO/Logo.jpg" alt="Logo T.M. Sicurezza">
+                <span>T.M. Sicurezza</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="La nostra azienda.html">La nostra azienda</a></li>
+            <li class="dropdown-trigger">
+                <a href="#">Servizi ▼</a>
+                <ul class="dropdown">
+                    <li><a href="Esempio di documentazione DVR.html">Esempio di documentazione DVR</a></li>
+                    <li><a href="Calcolo della valutazione di Rischio.html">Calcolo della valutazione di Rischio</a></li>
+                    <li><a href="Spiegazione della valutazione del Calcolo del RIschio e Pericolo.html">Spiegazione della valutazione</a></li>
+                </ul>
+            </li>
+            <li><a href="Contatti.html">Contatti</a></li>
+            <li class="dropdown-trigger">
+                <a href="#" class="login-btn">Login ▼</a>
+                <ul class="dropdown dropdown-login">
+                    <li><a href="Clienti.html">Clienti</a></li>
+                    <li><a href="Dipendenti.html">Dipendenti</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Contenitore Principale Operativo -->
+    <main class="main-container">
+        <!-- Titolo della pagina con istruzioni operative per l'utente -->
+        <div class="section-title">
+            <h2>Calcolo della Valutazione Rischio</h2>
+            <p>Seleziona la posizione dal menu oppure inquadra il QR Code dell'area per consultare istantaneamente il DVR in formato PDF.</p>
+        </div>
+
+        <!-- Inizio della griglia a due colonne (Form manuale a sinistra, QR code a destra) -->
+        <div class="grid-sections">
+            
+            <!-- SEZIONE 1: INPUT MANUALE TRAMITE MENU A TENDINA -->
+            <section class="section-box">
+                <div>
+                    <h3>Inserisci la tua posizione</h3>
+                    <!-- Inizio del modulo di invio dati con identificativo "risk-form" -->
+                    <form id="risk-form">
+                        <div class="form-group">
+                            <label for="posizione-select">Seleziona Area / Ambiente:</label>
+                            <!-- Menu a tendina contenente le 15 aree aziendali mappate perfettamente -->
+                            <select id="posizione-select" class="form-control" required>
+                                <option value="">-- Scegli un'opzione --</option>
+                                <option value="1">1) Uff. Amministrativo (12.60 m2)</option>
+                                <option value="2">2) Uff. Tecnico (17.64 m2)</option>
+                                <option value="3">3) Sala Riunione</option>
+                                <option value="4">4) Fotocopie</option>
+                                <option value="5">5) W.C. / Toilette</option>
+                                <option value="6">6) Attesa</option>
+                                <option value="7">7) Ingresso</option>
+                                <option value="8">8) Corridoio</option>
+                                <option value="9">9) Archivi</option>
+                                <option value="10">10) Segreteria</option>
+                                <option value="11">11) Officina</option>
+                                <option value="12">12) Deposito attrezzature</option>
+                                <option value="13">13) Deposito materiali</option>
+                                <option value="14">14) Deposito</option>
+                                <option value="15">15) Zona Esterna</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-action">Apri Documento DVR</button>
+                    </form>
+                </div>
+            </section>
+
+             <!-- SEZIONE 2: LETTORE QR CODE (FOTOCAMERA O FILE IMMAGINE) -->
+            <section class="section-box">
+                <div>
+                    <h3>Scansione o Upload QR Code</h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Attiva la fotocamera per scansionare il codice sul posto oppure carica un'immagine catturata dal tuo dispositivo.</p>
+                    
+                    <div class="form-group" style="align-items: center; gap: 10px;">
+                        <!-- Pulsante verde per attivare lo streaming della fotocamera posteriore -->
+                        <button type="button" id="btn-start-camera" class="btn-action" style="background-color: #2e7d32;">📷 Avvia Fotocamera</button>
+                        
+                        <button type="button" id="btn-stop-camera" class="btn-action">⏹ Interrompi Fotocamera</button>
+                        
+                        <div id="camera-preview-container">
+                            <div id="reader"></div>
+                        </div>
+
+                        <label for="qr-file-input" class="file-upload-label">📁 Carica Foto QR Code</label>
+                        <input type="file" id="qr-file-input" accept="image/*">
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const triggers = document.querySelectorAll('.dropdown-trigger');
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 900) {
+                        const dropdown = this.querySelector('.dropdown');
+                        const isOpen = dropdown.style.display === 'block';
+                        document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
+                        dropdown.style.display = isOpen ? 'none' : 'block';
+                        if(e.target.parentElement === this || e.target === this.querySelector('a')) {
+                            e.preventDefault();
+                        }
+                    }
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.dropdown-trigger')) {
+                    document.querySelectorAll('.dropdown').forEach(d => {
+                        if (window.innerWidth <= 900) {
+                            d.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Inclusione dello script JavaScript logico disaccoppiato che gestisce i calcoli e l'hardware della fotocamera -->
+    <script src="script.js"></script>
+</body>
+</html>

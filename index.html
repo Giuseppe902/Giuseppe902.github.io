@@ -1,0 +1,155 @@
+<!-- Questa riga dice al browser che il file è un documento HTML moderno (HTML5) -->
+<!DOCTYPE html>
+
+<!-- Apre il documento HTML e definisce l'italiano ("it") come lingua principale per i motori di ricerca e i traduttori -->
+<html lang="it">
+
+<head>
+    <!-- Definisce la codifica dei caratteri universale (UTF-8) per visualizzare correttamente accenti e simboli -->
+    <meta charset="UTF-8">
+    
+    <!-- Rende il sito "responsive", cioè fa in modo che si adatti automaticamente agli schermi di smartphone, tablet e PC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Titolo accademico e professionale per la tesi di laurea L-31 -->
+    <title>T.M. Sicurezza - Previsione Rischio & IoT Management</title>
+    
+    <!-- Collega questo file HTML al file esterno "style.css" che contiene tutte le regole grafiche e i colori -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Intestazione principale della pagina: contiene la barra di navigazione fissa e stabilizzata -->
+    <nav class="navbar">
+        
+        <!-- Contenitore del logo aziendale scritto sul lato sinistro della barra -->
+        <div class="logo">
+            <!-- Un link che, se cliccato, riporta l'utente alla home page (index.html) -->
+            <a href="index.html">
+                <!-- Mostra l'immagine del logo posizionata nella cartella FOTO -->
+                <img src="FOTO/Logo.jpg" alt="Logo T.M. Sicurezza">
+                <!-- Testo scritto a fianco all'immagine del logo -->
+                <span>T.M. Sicurezza</span>
+            </a>
+        </div>
+        
+        <!-- Inizio della lista dei link di navigazione (il menu stabilizzato per mobile) -->
+        <ul class="nav-links">
+            <!-- Primo elemento del menu: un link semplice che porta alla Home -->
+            <li><a href="index.html" class="active">Home</a></li>
+            
+            <!-- Secondo elemento del menu: un link che porta alla pagina di presentazione aziendale -->
+            <li><a href="La nostra azienda.html">La nostra azienda</a></li>
+            
+            <!-- Terzo elemento: menu a tendina Servizi abilitato per dispositivi mobili -->
+            <li class="dropdown-trigger">
+                <a href="#">Servizi ▼</a>
+                <!-- Sotto-lista che contiene i servizi offerti -->
+                <ul class="dropdown">
+                    <li><a href="Esempio di documentazione DVR.html">Esempio di documentazione DVR</a></li>
+                    <li><a href="Calcolo della valutazione di Rischio.html">Calcolo della valutazione di Rischio</a></li>
+                    <li><a href="Spiegazione della valutazione del Calcolo del RIschio e Pericolo.html">Spiegazione della valutazione</a></li>
+                </ul>
+            </li>
+            
+            <!-- Quarto elemento del menu principale: link alla pagina dei contatti -->
+            <li><a href="Contatti.html">Contatti</a></li>
+            
+            <!-- Quinto elemento: menu a tendina dedicato al Login per l'accesso protetto dell'infrastruttura -->
+            <li class="dropdown-trigger">
+                <a href="#" class="login-btn">Login ▼</a>
+                <!-- Sotto-lista per dividere l'accesso sicurizzato tra Clienti e Dipendenti -->
+                <ul class="dropdown dropdown-login">
+                    <li><a href="Clienti.html">Clienti Area Riservata</a></li>
+                    <li><a href="Dipendenti.html">Dipendenti & RSPP Portal</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Sezione "Hero": grande fascia d'impatto visivo con focus accademico sulla digitalizzazione dei processi -->
+    <section class="hero">
+        <h1>Previsione e Gestione Digitale del Rischio</h1>
+        <p>Garantiamo la sicurezza e la conformità aziendale integrando l'edge computing, algoritmi di calcolo predittivi e sistemi QR-Code per una mappatura in tempo reale del D.Lgs. 81/08.</p>
+    </section>
+
+    <!-- Sezione informativa contenente la griglia delle caratteristiche aziendali e obiettivi di tesi -->
+    <section class="about-company">
+        <!-- Contenitore del titolo di questa specifica sezione -->
+        <div class="section-title">
+            <h2>Il nostro approccio alla sicurezza 4.0</h2>
+        </div>
+        
+        <!-- Contenitore generale (la griglia elastica responsiva) che racchiude le 3 schede informative -->
+        <div class="cards-container">
+            
+            <!-- Prima Scheda (Card 1): dedicata alla previsione dei pericoli e calcolo algoritmico -->
+            <div class="card">
+                <img src="FOTO/Caschetto.jpg" alt="Riunione aziendale con caschetto">
+                <div class="card-content">
+                    <h3>Previsione dei Pericoli (R = P × G)</h3>
+                    <p>Analizziamo costantemente gli scenari delle 4 macro-aree operative mediante algoritmi di calcolo conformi alla norma UNI EN ISO 12100, azzerando le probabilità latenti di infortunio.</p>
+                </div>
+            </div>
+
+            <!-- Seconda Scheda (Card 2): dedicata alla partnership e sicurezza dei dati -->
+            <div class="card">
+                <img src="FOTO/StrettaDiMano.jpg" alt="Stretta di mano in ufficio">
+                <div class="card-content">
+                    <h3>Cybersecurity & Privacy (Tema 2)</h3>
+                    <p>Progettiamo architetture web protette che blindano l'accesso ai registri sanitari e aziendali, garantendo la piena integrità e conformità allo standard internazionale ISO/IEC 27001 e al GDPR.</p>
+                </div>
+            </div>
+
+            <!-- Terza Scheda (Card 3): dedicata alla documentazione digitale e all'accesso istantaneo tramite QR -->
+            <div class="card">
+                <img src="FOTO/DocumentazioneFoto.jpg" alt="Documentazione e analisi">
+                <div class="card-content">
+                    <h3>Mappatura IoT & QR-Code</h3>
+                    <p>Forniamo un accesso immediato ai fascicoli DVR di ciascuna delle 15 stanze tramite scansione ottica sul posto, interfacciando lo smartphone direttamente con il Cloud Storage locale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Script Javascript integrato esclusivamente per sanare il click del menu a tendina sui telefoni touch screen -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const triggers = document.querySelectorAll('.dropdown-trigger');
+            
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function(e) {
+                    // Se siamo su un dispositivo mobile/touch screen impediamo la chiusura anomala
+                    if (window.innerWidth <= 900) {
+                        const dropdown = this.querySelector('.dropdown');
+                        const isOpen = dropdown.style.display === 'block';
+                        
+                        // Chiude tutti gli altri menu aperti per evitare sovrapposizioni grafiche
+                        document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
+                        
+                        // Inverte lo stato di apertura della tendina selezionata
+                        dropdown.style.display = isOpen ? 'none' : 'block';
+                        
+                        // Evita che il click propaghi bloccando il touch
+                        if(e.target.parentElement === this || e.target === this.querySelector('a')) {
+                            e.preventDefault();
+                        }
+                    }
+                });
+            });
+            
+            // Chiude i menu se l'utente clicca in un qualsiasi punto vuoto fuori dalla navbar
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.dropdown-trigger')) {
+                    document.querySelectorAll('.dropdown').forEach(d => {
+                        if (window.innerWidth <= 900) {
+                            d.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
